@@ -1,30 +1,31 @@
-let currentSlide = 0;
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
+  const slides = document.querySelectorAll('.hero-slider .slide');
+  let currentSlide = 0;
+  const slideInterval = 5000; // 5 seconds per slide
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
       slide.classList.toggle('active', i === index);
-      dots[i].classList.toggle('active', i === index);
     });
-    currentSlide = index;
   }
 
-  // function autoSlide() {
-  //   currentSlide = (currentSlide + 1) % slides.length;
-  //   showSlide(currentSlide);
-  // }
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
 
-  // setInterval(autoSlide, 5000); // Change every 5 seconds
+  setInterval(nextSlide, slideInterval);
 
-  //   const accordionItems = document.querySelectorAll(".accordion-item");
 
-  // accordionItems.forEach(item => {
-  //   const header = item.querySelector(".accordion-header");
-  //   header.addEventListener("click", () => {
-  //     item.classList.toggle("active");
-  //   });
-  // });
+  setInterval(autoSlide, 5000);
+
+    const accordionItems = document.querySelectorAll(".accordion-item");
+
+  accordionItems.forEach(item => {
+    const header = item.querySelector(".accordion-header");
+    header.addEventListener("click", () => {
+      item.classList.toggle("active");
+    });
+  });
 
     document.addEventListener("DOMContentLoaded", () => {
     const counters = document.querySelectorAll(".stat-box h2");

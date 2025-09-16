@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-  
+
 
 <header class="main-navbar">
   <div class="nav-container">
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="slide" style="background-image: url('Images/Civil Construction.jpeg');">
+    <div class="slide" style="background-image: url('Images/Civil\ Construction.jpeg');">
       <div class="overlay"></div>
       <div class="slide-content">
         <h1>YOUR TRUSTED PARTNER</h1>
@@ -257,7 +257,6 @@
   <p class="subtitle">
     Hear from our satisfied clients who’ve worked with us and experienced outstanding service, dedication, and results.
   </p>
-
   <div class="testimonial-cards">
     <div class="testimonial-wrap">
       <div class="testimonial-card">
@@ -500,7 +499,6 @@
   </div>
 </footer>
 
-<script src="main.js"></script>
 <script>
   const navContainer = document.querySelector('.nav-container');
 
@@ -509,5 +507,133 @@
   });
 </script>
 
+<script>
+  const counters = document.querySelectorAll('.stat-box h2');
+  let started = false;
+  let fluctuateInterval;
+
+  function startCounters() {
+    counters.forEach(counter => {
+      const target = parseInt(counter.textContent.replace(/\D/g, ''));
+      const suffix = /\+$/.test(counter.textContent) ? '+' : '';
+      let count = 0;
+      const speed = Math.ceil(target / 100);
+
+      const animate = () => {
+        count += speed;
+        if (count < target) {
+          counter.textContent = count + suffix;
+          requestAnimationFrame(animate);
+        } else {
+          counter.textContent = target.toLocaleString() + suffix;
+        }
+      };
+      animate();
+    });
+  }
+
+  function startFluctuation() {
+    fluctuateInterval = setInterval(() => {
+      counters.forEach(counter => {
+        const suffix = /\+$/.test(counter.textContent) ? '+' : '';
+        let current = parseInt(counter.textContent.replace(/\D/g, ''));
+        // Random change between -20 and +20
+        const change = Math.floor(Math.random() * 41) - 20;
+        let newValue = current + change;
+        if (newValue < 0) newValue = 0;
+        counter.textContent = newValue.toLocaleString() + suffix;
+      });
+    }, 3000); // fluctuate every 3 seconds
+  }
+
+  function handleScroll() {
+    const section = document.querySelector('.stats-section');
+    const sectionTop = section.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+
+    if (!started && sectionTop < windowHeight - 100) {
+      started = true;
+      startCounters();
+      setTimeout(startFluctuation, 30000);
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll);
+</script>
+
+<script>
+// Wait for DOM to load
+document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll(".filter-buttons button");
+  const works = document.querySelectorAll(".gallery .work");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      // Remove active class from all buttons
+      buttons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      const filter = button.getAttribute("data-filter");
+
+      works.forEach(work => {
+        const category = work.getAttribute("data-category");
+
+        if (filter === "all" || category === filter) {
+          work.style.display = "block";
+          setTimeout(() => {
+            work.style.opacity = "1";
+            work.style.transform = "scale(1)";
+          }, 50); // smooth transition
+        } else {
+          work.style.opacity = "0";
+          work.style.transform = "scale(0.9)";
+          setTimeout(() => {
+            work.style.display = "none";
+          }, 300); // match transition duration
+        }
+      });
+    });
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const accordions = document.querySelectorAll(".accordion-header");
+
+  accordions.forEach(header => {
+    header.addEventListener("click", function () {
+      const item = this.parentElement;
+      const body = item.querySelector(".accordion-body");
+      const arrow = this.querySelector(".arrow");
+
+      // Close other open items
+      document.querySelectorAll(".accordion-item").forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove("active");
+          otherItem.querySelector(".accordion-body").style.maxHeight = null;
+          otherItem.querySelector(".arrow").style.transform = "rotate(0deg)";
+        }
+      });
+
+      // Toggle current item
+      if (item.classList.contains("active")) {
+        item.classList.remove("active");
+        body.style.maxHeight = null;
+        arrow.style.transform = "rotate(0deg)";
+      } else {
+        item.classList.add("active");
+        body.style.maxHeight = body.scrollHeight + "px";
+        arrow.style.transform = "rotate(180deg)";
+      }
+    });
+  });
+});
+</script>
+
+
+
+
+<script src="main.js"></script>
 </body>
 </html>
