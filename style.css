@@ -1230,7 +1230,6 @@ body, html {
   border: none;
 }
 
-
 @media (max-width: 768px) {
   .slide-content {
     align-items: center;      
