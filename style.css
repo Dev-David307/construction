@@ -1231,6 +1231,23 @@ body, html {
 }
 
 
+@media (max-width: 768px) {
+  .slide-content {
+    align-items: center;      
+    justify-content: center; 
+    text-align: center; 
+  }
+
+  .slide-content .cta-btn {
+    display: inline-block;
+    margin: 15px auto 0 auto;
+    padding: 12px 24px;
+    font-size: 16px;  
+  }
+}
+
+
+
 
 
 
